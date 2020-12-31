@@ -1,48 +1,63 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Grid.css';
+
+const COL = 7; // Number of columns
 
 // Basic box, used in grid as a cell
 const Box = (props) => {
-    const [mark, setMark] = useState(0);
-
-    // console.log(mark);
+    let label = COL * props.rowId + props.colId + 1;
     return (
-        <div className={'box' + props.customClass}>
-            <span className={'cell-label'}>{props.label}</span>
+        <div className={'box ' + props.customClass}>
+            <span className={'cell-label'}>{label}</span>
             <button
-                className={'cell-button ' + mark}
-                onClick={() => {
-                    setMark(mark == 'x' ? 'o' : 'x');
-                }}
+                className={'cell-button ' + props.value}
+                onClick={props.onClick.bind(this, props.rowId, props.colId)}
             />
         </div>
     );
 };
 
-// Creates a row of boxes from a data props containing an array of values
+// Creates a row of boxes from a data props
+// containing an array of values
 const Row = (props) => {
-    return (
-        <div className="row">
-            {props.data.map((obj) => {
-                return (
-                    <Box
-                        label={obj.val}
-                        customClass={obj.customClass}
-                        mark={obj.mark}
-                    />
-                );
-            })}
-        </div>
-    );
+    // Build cells compromising rows
+    let colId = 0;
+    let customClass = '';
+    let rows = props.data.map((val) => {
+        customClass = colId === props.data.length - 1 ? 'box-right ' : '';
+        return (
+            <Box
+                key={colId}
+                colId={colId++}
+                rowId={props.rowId}
+                value={val}
+                customClass={props.customClass + customClass}
+                onClick={props.onClick}
+            />
+        );
+    });
+    return <div className="row">{rows}</div>;
 };
 
 // Provide a 7x7 grid
+// Grid has a data props which contains a 7x7
+// matrix containing the data to render
 const Grid = (props) => {
-    // Grid has a data props which contains a 7x7
-    // matrix containing the data to render
+    // Build the rows of the grid to be rendered
+    let rowId = 0;
+    let customClass = '';
     let grid = props.data.map((row) => {
         // Process the data into individual rows
-        return <Row data={row} />;
+        customClass = rowId === props.data.length - 1 ? 'box-bottom ' : '';
+        return (
+            <Row
+                key={rowId}
+                rowId={rowId++}
+                data={row}
+                onClick={props.onClick}
+                customClass={customClass}
+            />
+        );
     });
 
     return <div className="grid">{grid}</div>;
