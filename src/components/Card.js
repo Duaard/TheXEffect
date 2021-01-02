@@ -1,12 +1,12 @@
 import React from 'react';
 import { Grid } from './Grid';
-import data from '../data/mock';
 
 class Card extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            grid: data,
+            grid: props.grid,
+            title: props.title,
         };
     }
 
@@ -30,7 +30,7 @@ class Card extends React.Component {
     render() {
         return (
             <div>
-                <h1>Card Title</h1>
+                <h1>{this.state.title}</h1>
                 <Grid data={this.state.grid} onClick={this.handleClick} />
             </div>
         );
