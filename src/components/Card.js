@@ -8,16 +8,19 @@ class Card extends React.Component {
             grid: props.grid,
             title: props.title,
         };
+
+        // Binding for `this`
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick = (rowId, colId) => {
+    handleClick(rowId, colId) {
         // Change the value of grid[rowId, colId]
         let newGrid = this.state.grid;
         newGrid[rowId][colId] = newGrid[rowId][colId] === 'x' ? 'o' : 'x';
         this.setState({
             grid: newGrid,
         });
-    };
+    }
 
     // componentDidMount() {
     //     let newGrid = this.state.grid;

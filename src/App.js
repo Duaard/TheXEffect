@@ -1,20 +1,16 @@
 import React from 'react';
-import Card from './components/Card';
+import CardsView from './views/Cards';
 import createMock from './data/mock';
 
 let cards = ['card1', 'card2', 'card3'];
 let mock = createMock(cards);
 
-const App = () => {
+function App() {
     return (
         <div>
-            {mock.map((card) => {
-                return (
-                    <Card key={card.id} grid={card.grid} title={card.title} />
-                );
-            })}
+            <CardsView />
         </div>
     );
-};
+}
 
 export default App;
