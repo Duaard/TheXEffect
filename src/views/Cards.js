@@ -1,24 +1,50 @@
 import React from 'react';
 import Card from '../components/Card';
-
-const api = 'http://localhost:3000';
+import { fetchCards } from '../api/index';
 
 class CardsView extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            error: null,
+            isLoaded: false,
+            cards: [],
+        };
     }
 
     componentDidMount() {
-        const cFetch = async function () {
-            let res = await fetch(api + '/cards');
-            let data = await res.json();
-            console.log(data);
-        };
-        cFetch();
+        fetchCards().then(
+            (data) => {
+                this.setState({
+                    cards: data,
+                    isLoaded: true,
+                });
+            },
+            (error) => {
+                this.setState({
+                    error: error,
+                });
+            }
+        );
     }
 
     render() {
-        return <h1>Hello world!</h1>;
+        const { error, isLoaded, cards } = this.state;
+        if (error) {
+            return { error };
+        } else if (!isLoaded) {
+            console.log('Loading');
+            return <h1>Loading</h1>;
+        } else {
+            console.log(cards);
+            return (
+                <div>
+                    {cards.map((card) => {
+                        return <Card />;
+                    })}
+                </div>
+            );
+        }
     }
 }
 
