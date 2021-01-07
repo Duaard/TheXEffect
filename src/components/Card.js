@@ -7,6 +7,7 @@ class Card extends React.Component {
         this.state = {
             grid: props.grid,
             title: props.title,
+            updateCards: props.updateCards,
         };
 
         // Binding for `this`
@@ -20,6 +21,7 @@ class Card extends React.Component {
         this.setState({
             grid: newGrid,
         });
+        this.state.updateCards();
     }
 
     // componentDidMount() {
