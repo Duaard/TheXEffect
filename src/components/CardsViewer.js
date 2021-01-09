@@ -1,20 +1,20 @@
 import React from 'react';
-import Card from '../components/Card';
+import { Card } from '../components/Card';
 import { fetchCards, createCard } from '../api/index';
-import createMock from '../data/mock';
+import './CardsViewer.css';
 
 function CreateCard(props) {
     return (
         <div>
             <form onSubmit={props.onSubmit}>
                 <input type="text" name="title" />
-                <input type="submit" />
+                <input type="submit" value="Add Card" />
             </form>
         </div>
     );
 }
 
-class CardsView extends React.Component {
+class CardsViewer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -23,8 +23,8 @@ class CardsView extends React.Component {
             cards: [],
         };
 
-        this.handleSubmit = this.handleSubmit.bind(this);
         this.updateCards = this.updateCards.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -43,7 +43,7 @@ class CardsView extends React.Component {
         );
     }
 
-    handleSubmit(e) {
+    onSubmit(e) {
         e.preventDefault();
         let card = {
             title: e.target.title.value,
@@ -60,7 +60,8 @@ class CardsView extends React.Component {
         createCard(cards);
     }
 
-    updateCards() {
+    updateCards(card) {
+        // TODO: Make a PUT request
         createCard(this.state.cards);
     }
 
@@ -74,11 +75,7 @@ class CardsView extends React.Component {
         } else {
             console.log(cards);
             return (
-                <div>
-                    <CreateCard
-                        cards={this.state.cards}
-                        onSubmit={this.handleSubmit}
-                    />
+                <div className="cards-viewer">
                     {cards.map((card) => {
                         return (
                             <Card
@@ -95,4 +92,4 @@ class CardsView extends React.Component {
     }
 }
 
-export default CardsView;
+export default CardsViewer;

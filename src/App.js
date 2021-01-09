@@ -1,10 +1,10 @@
 import React from 'react';
-import CardsView from './views/Cards';
+import Home from './views/Home';
 
 function App() {
     return (
         <div>
-            <CardsView />
+            <Home />
         </div>
     );
 }

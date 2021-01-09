@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid } from './Grid';
+import './Card.css';
 
 class Card extends React.Component {
     constructor(props) {
@@ -24,17 +25,9 @@ class Card extends React.Component {
         this.state.updateCards();
     }
 
-    // componentDidMount() {
-    //     let newGrid = this.state.grid;
-    //     newGrid[0][0] = 'x';
-    //     this.setState({
-    //         grid: newGrid,
-    //     });
-    // }
-
     render() {
         return (
-            <div>
+            <div className="card">
                 <h1>{this.state.title}</h1>
                 <Grid data={this.state.grid} onClick={this.handleClick} />
             </div>
@@ -42,4 +35,4 @@ class Card extends React.Component {
     }
 }
 
-export default Card;
+export { Card };
