@@ -68,7 +68,8 @@ class CardsViewer extends React.Component {
     render() {
         const { error, isLoaded, cards } = this.state;
         if (error) {
-            return { error };
+            console.log(error);
+            return <h1>Can't reach API</h1>;
         } else if (!isLoaded) {
             // console.log('Loading');
             return <h1>Loading</h1>;

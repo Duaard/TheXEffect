@@ -1,10 +1,13 @@
 import React from 'react';
-import Home from './views/Home';
+import { Home, Sidebar } from './views/index';
 
 function App() {
     return (
         <div>
-            <Home />
+            <Sidebar />
+            <main>
+                <Home />
+            </main>
         </div>
     );
 }
