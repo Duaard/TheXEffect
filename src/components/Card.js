@@ -18,7 +18,8 @@ class Card extends React.Component {
     handleClick(rowId, colId) {
         // Change the value of grid[rowId, colId]
         let newGrid = this.state.grid;
-        newGrid[rowId][colId] = newGrid[rowId][colId] === 'x' ? 'o' : 'x';
+        let cell = newGrid[rowId][colId];
+        newGrid[rowId][colId] = cell === 'o' ? '' : cell === 'x' ? 'o' : 'x';
         this.setState({
             grid: newGrid,
         });
