@@ -25,6 +25,7 @@ class CardsViewer extends React.Component {
 
         this.updateCards = this.updateCards.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     componentDidMount() {
@@ -41,6 +42,23 @@ class CardsViewer extends React.Component {
                 });
             }
         );
+    }
+
+    // Handles click for a specfic card given
+    // the card index, and the row and col of
+    // the box clicked
+    onClick(cardIdx, row, col) {
+        this.setState((prev) => {
+            let nGrid = prev.cards[cardIdx].grid;
+            let clicked = nGrid[row][col];
+            nGrid[row][col] =
+                clicked === 'o' ? '' : clicked === 'x' ? 'o' : 'x';
+            let nCards = prev.cards;
+            nCards[cardIdx].grid = nGrid;
+            return {
+                cards: nCards,
+            };
+        });
     }
 
     onSubmit(e) {
@@ -77,12 +95,14 @@ class CardsViewer extends React.Component {
             console.log(cards);
             return (
                 <div className="cards-viewer">
-                    {cards.map((card) => {
+                    {cards.map((card, i) => {
                         return (
                             <Card
                                 key={card.title}
+                                cardIdx={i}
                                 title={card.title}
                                 grid={card.grid}
+                                onClick={this.onClick}
                                 updateCards={this.updateCards}
                             />
                         );

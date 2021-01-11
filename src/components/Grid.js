@@ -11,7 +11,12 @@ const Box = (props) => {
             <span className={'cell-label'}>{label}</span>
             <button
                 className={'cell-button ' + props.value}
-                onClick={props.onClick.bind(this, props.rowId, props.colId)}
+                onClick={props.onClick.bind(
+                    this,
+                    props.cardIdx,
+                    props.rowId,
+                    props.colId
+                )}
             />
         </div>
     );
@@ -28,6 +33,7 @@ const Row = (props) => {
         return (
             <Box
                 key={colId}
+                cardIdx={props.cardIdx}
                 colId={colId++}
                 rowId={props.rowId}
                 value={val}
@@ -52,6 +58,7 @@ const Grid = (props) => {
         return (
             <Row
                 key={rowId}
+                cardIdx={props.cardIdx}
                 rowId={rowId++}
                 data={row}
                 onClick={props.onClick}
