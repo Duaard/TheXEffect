@@ -1,5 +1,15 @@
+.cards-viewer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 .cards-viewer {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+}
+
+.create-card {
+    margin: 50px;
 }

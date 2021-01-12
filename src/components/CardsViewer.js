@@ -94,19 +94,24 @@ class CardsViewer extends React.Component {
         } else {
             console.log(cards);
             return (
-                <div className="cards-viewer">
-                    {cards.map((card, i) => {
-                        return (
-                            <Card
-                                key={card.title}
-                                cardIdx={i}
-                                title={card.title}
-                                grid={card.grid}
-                                onClick={this.onClick}
-                                updateCards={this.updateCards}
-                            />
-                        );
-                    })}
+                <div className="cards-viewer-container">
+                    <div className="create-card">
+                        <CreateCard onSubmit={this.onSubmit} />
+                    </div>
+                    <div className="cards-viewer">
+                        {cards.map((card, i) => {
+                            return (
+                                <Card
+                                    key={card.title}
+                                    cardIdx={i}
+                                    title={card.title}
+                                    grid={card.grid}
+                                    onClick={this.onClick}
+                                    updateCards={this.updateCards}
+                                />
+                            );
+                        })}
+                    </div>
                 </div>
             );
         }
