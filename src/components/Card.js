@@ -9,7 +9,7 @@ function Card(props) {
             <Grid
                 data={props.grid}
                 cardIdx={props.cardIdx}
-                onClick={props.onClick}
+                handleClick={props.handleClick}
             />
         </div>
     );

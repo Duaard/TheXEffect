@@ -5,18 +5,16 @@ const COL = 7; // Number of columns
 
 // Basic box, used in grid as a cell
 const Box = (props) => {
-    let label = COL * props.rowId + props.colId + 1;
+    let { cardIdx, rowId, colId } = props;
+    let label = COL * rowId + colId + 1;
     return (
         <div className={'box ' + props.customClass}>
             <span className={'cell-label'}>{label}</span>
             <button
                 className={'cell-button ' + props.value}
-                onClick={props.onClick.bind(
-                    this,
-                    props.cardIdx,
-                    props.rowId,
-                    props.colId
-                )}
+                onClick={() => {
+                    props.handleClick(cardIdx, rowId, colId);
+                }}
             />
         </div>
     );
@@ -38,7 +36,7 @@ const Row = (props) => {
                 rowId={props.rowId}
                 value={val}
                 customClass={props.customClass + customClass}
-                onClick={props.onClick}
+                handleClick={props.handleClick}
             />
         );
     });
@@ -61,7 +59,7 @@ const Grid = (props) => {
                 cardIdx={props.cardIdx}
                 rowId={rowId++}
                 data={row}
-                onClick={props.onClick}
+                handleClick={props.handleClick}
                 customClass={customClass}
             />
         );

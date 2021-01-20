@@ -2,6 +2,7 @@ import React from 'react';
 import { Card } from '../components/Card';
 import { fetchCards, createCard } from '../api/index';
 import './CardsViewer.css';
+import clonedeep from 'lodash.clonedeep';
 
 function CreateCard(props) {
     return (
@@ -25,7 +26,7 @@ class CardsViewer extends React.Component {
 
         this.updateCards = this.updateCards.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        this.onClick = this.onClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidMount() {
@@ -39,6 +40,8 @@ class CardsViewer extends React.Component {
             (error) => {
                 this.setState({
                     error: error,
+                    // cards: [],
+                    // isLoaded: true,
                 });
             }
         );
@@ -47,14 +50,19 @@ class CardsViewer extends React.Component {
     // Handles click for a specfic card given
     // the card index, and the row and col of
     // the box clicked
-    onClick(cardIdx, row, col) {
+    handleClick(cardIdx, row, col) {
         this.setState((prev) => {
-            let nGrid = prev.cards[cardIdx].grid;
-            let clicked = nGrid[row][col];
-            nGrid[row][col] =
-                clicked === 'o' ? '' : clicked === 'x' ? 'o' : 'x';
-            let nCards = prev.cards;
-            nCards[cardIdx].grid = nGrid;
+            // Create a shallow copy of cards & grid
+            let nCards = clonedeep(prev.cards);
+
+            // Get value of cell when clicked
+            let clicked = prev.cards[cardIdx].grid[row][col];
+            // Formulate new value
+            let value = clicked === 'o' ? '' : clicked === 'x' ? 'o' : 'x';
+
+            // Assign new calue to nGrid and nCards
+            nCards[cardIdx].grid[row][col] = value;
+
             return {
                 cards: nCards,
             };
@@ -87,12 +95,10 @@ class CardsViewer extends React.Component {
         const { error, isLoaded, cards } = this.state;
         if (error) {
             console.log(error);
-            return <h1>Can't reach API</h1>;
         } else if (!isLoaded) {
             // console.log('Loading');
             return <h1>Loading</h1>;
         } else {
-            console.log(cards);
             return (
                 <div className="cards-viewer-container">
                     <div className="create-card">
@@ -106,7 +112,7 @@ class CardsViewer extends React.Component {
                                     cardIdx={i}
                                     title={card.title}
                                     grid={card.grid}
-                                    onClick={this.onClick}
+                                    handleClick={this.handleClick}
                                     updateCards={this.updateCards}
                                 />
                             );
