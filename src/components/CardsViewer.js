@@ -95,6 +95,7 @@ class CardsViewer extends React.Component {
         const { error, isLoaded, cards } = this.state;
         if (error) {
             console.log(error);
+            return <h1>There seems to be an error.</h1>;
         } else if (!isLoaded) {
             // console.log('Loading');
             return <h1>Loading</h1>;
