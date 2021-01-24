@@ -2,7 +2,6 @@ import React from 'react';
 import { Card } from '../components/Card';
 import { fetchCards, createCard } from '../api/index';
 import './CardsViewer.css';
-import clonedeep from 'lodash.clonedeep';
 
 const ROW = 7,
     COL = 7;
@@ -56,7 +55,8 @@ class CardsViewer extends React.Component {
     handleClick(cardIdx, cellIdx) {
         this.setState((prev) => {
             // Create a shallow copy of cards & grid
-            let nCards = clonedeep(prev.cards);
+            let cards = [...prev.cards];
+            let grid = [...cards[cardIdx].grid];
 
             // Get value of cell when clicked
             let clicked = prev.cards[cardIdx].grid[cellIdx];
@@ -64,10 +64,11 @@ class CardsViewer extends React.Component {
             let value = clicked === 'o' ? '' : clicked === 'x' ? 'o' : 'x';
 
             // Assign new calue to nGrid and nCards
-            nCards[cardIdx].grid[cellIdx] = value;
+            grid[cellIdx] = value;
+            cards[cardIdx] = { ...cards[cardIdx], grid: grid };
 
             return {
-                cards: nCards,
+                cards: cards,
             };
         });
     }

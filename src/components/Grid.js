@@ -74,7 +74,11 @@ const Grid = (props) => {
             );
         });
 
-        grid.push(<div className="row">{rows}</div>);
+        grid.push(
+            <div className="row" key={r}>
+                {rows}
+            </div>
+        );
     }
 
     return <div className="grid">{grid}</div>;
