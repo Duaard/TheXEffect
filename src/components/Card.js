@@ -10,6 +10,8 @@ function Card(props) {
                 data={props.grid}
                 cardIdx={props.cardIdx}
                 handleClick={props.handleClick}
+                row={props.row}
+                col={props.col}
             />
         </div>
     );

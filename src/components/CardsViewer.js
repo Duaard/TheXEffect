@@ -4,6 +4,9 @@ import { fetchCards, createCard } from '../api/index';
 import './CardsViewer.css';
 import clonedeep from 'lodash.clonedeep';
 
+const ROW = 7,
+    COL = 7;
+
 function CreateCard(props) {
     return (
         <div>
@@ -50,18 +53,18 @@ class CardsViewer extends React.Component {
     // Handles click for a specfic card given
     // the card index, and the row and col of
     // the box clicked
-    handleClick(cardIdx, row, col) {
+    handleClick(cardIdx, cellIdx) {
         this.setState((prev) => {
             // Create a shallow copy of cards & grid
             let nCards = clonedeep(prev.cards);
 
             // Get value of cell when clicked
-            let clicked = prev.cards[cardIdx].grid[row][col];
+            let clicked = prev.cards[cardIdx].grid[cellIdx];
             // Formulate new value
             let value = clicked === 'o' ? '' : clicked === 'x' ? 'o' : 'x';
 
             // Assign new calue to nGrid and nCards
-            nCards[cardIdx].grid[row][col] = value;
+            nCards[cardIdx].grid[cellIdx] = value;
 
             return {
                 cards: nCards,
@@ -74,9 +77,7 @@ class CardsViewer extends React.Component {
         let card = {
             title: e.target.title.value,
             whys: [],
-            grid: [...Array(7)].map(() => {
-                return [...Array(7)];
-            }),
+            grid: [...Array(ROW * COL)],
         };
         let cards = this.state.cards;
         cards.push(card);
@@ -97,7 +98,6 @@ class CardsViewer extends React.Component {
             console.log(error);
             return <h1>There seems to be an error.</h1>;
         } else if (!isLoaded) {
-            // console.log('Loading');
             return <h1>Loading</h1>;
         } else {
             return (
@@ -113,6 +113,8 @@ class CardsViewer extends React.Component {
                                     cardIdx={i}
                                     title={card.title}
                                     grid={card.grid}
+                                    row={ROW}
+                                    col={COL}
                                     handleClick={this.handleClick}
                                     updateCards={this.updateCards}
                                 />

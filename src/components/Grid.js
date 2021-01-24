@@ -5,15 +5,15 @@ const COL = 7; // Number of columns
 
 // Basic box, used in grid as a cell
 const Box = (props) => {
-    let { cardIdx, rowId, colId } = props;
-    let label = COL * rowId + colId + 1;
+    let { cardIdx, cellIdx } = props;
+    let label = cellIdx + 1;
     return (
         <div className={'box ' + props.customClass}>
             <span className={'cell-label'}>{label}</span>
             <button
                 className={'cell-button ' + props.value}
                 onClick={() => {
-                    props.handleClick(cardIdx, rowId, colId);
+                    props.handleClick(cardIdx, cellIdx);
                 }}
             />
         </div>
@@ -43,27 +43,39 @@ const Row = (props) => {
     return <div className="row">{rows}</div>;
 };
 
-// Provide a 7x7 grid
-// Grid has a data props which contains a 7x7
-// matrix containing the data to render
+// Provide a grid based on the row and col props
+// Grid has a data props array contaning
+// cell data and value to render
 const Grid = (props) => {
-    // Build the rows of the grid to be rendered
-    let rowId = 0;
-    let customClass = '';
-    let grid = props.data.map((row) => {
-        // Process the data into individual rows
-        customClass = rowId === props.data.length - 1 ? 'box-bottom ' : '';
-        return (
-            <Row
-                key={rowId}
-                cardIdx={props.cardIdx}
-                rowId={rowId++}
-                data={row}
-                handleClick={props.handleClick}
-                customClass={customClass}
-            />
-        );
-    });
+    const { data, row, col } = props;
+    // Build the grid to be rendered
+    let grid = [];
+    for (let r = 0; r < row; r++) {
+        // Build the row
+        let rowData = [];
+        for (let c = 0; c < col; c++) {
+            rowData.push(data[r * col + c]);
+        }
+
+        let rows = rowData.map((val, idx) => {
+            idx += r * col;
+            // Custom class for cells in the bottom and right most edge
+            let customClass = (idx + 1) % col === 0 ? 'box-right ' : '';
+            customClass += idx >= (row - 1) * col ? 'box-bottom ' : '';
+            return (
+                <Box
+                    key={idx}
+                    cardIdx={props.cardIdx}
+                    cellIdx={idx}
+                    value={val}
+                    customClass={customClass}
+                    handleClick={props.handleClick}
+                />
+            );
+        });
+
+        grid.push(<div className="row">{rows}</div>);
+    }
 
     return <div className="grid">{grid}</div>;
 };
