@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { fetchCards, createCard } from '../api/index';
+import { getCards, createCard, updateCardCell, deleteCard } from '../api/index';
 import { CardsViewer, Sidebar } from '../components';
 import './Home.css';
 
@@ -10,7 +10,7 @@ function Home() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetchCards()
+    getCards()
       .then((cards) => {
         setCards(cards);
         setLoading(false);
@@ -20,7 +20,7 @@ function Home() {
       });
   }, []);
 
-  function handleClick(e, cardIdx, cellIdx) {
+  function handleCellClick(e, cardIdx, cellIdx) {
     // Create a shallow copy of cards & grid
     let nCards = [...cards];
     let grid = [...nCards[cardIdx].grid];
@@ -30,26 +30,38 @@ function Home() {
     // Formulate new value
     const value = clicked === 'o' ? '' : clicked === 'x' ? 'o' : 'x';
 
-    // Assign new calue to grid and nCards
-    grid[cellIdx] = value;
-    nCards[cardIdx] = { ...nCards[cardIdx], grid: grid };
-
-    setCards(nCards);
-    // Update cards values
-    createCard(nCards);
+    // Send API request
+    // TODO: Handle when update fails
+    updateCardCell(nCards[cardIdx]._id, cellIdx, value).then(() => {
+      // Assign new calue to grid and nCards
+      grid[cellIdx] = value;
+      nCards[cardIdx] = { ...nCards[cardIdx], grid: grid };
+      setCards(nCards);
+    });
   }
 
   function handleTitleClick(e, idx) {
     // Set the selected card
-    // console.log(e);
     setSelectedCard([...cards][idx]);
   }
 
   function handleCardCreate(e, card) {
-    const nCards = [...cards];
-    nCards.push(card);
-    setCards(nCards);
-    createCard(nCards);
+    createCard(card).then((_id) => {
+      const nCards = [...cards];
+      nCards.push({ ...card, _id });
+      setCards(nCards);
+    });
+  }
+
+  function handleCardDelete(e) {
+    const card = selectedCard;
+    deleteCard(card._id).then(() => {
+      // Update the cards
+      const nCards = cards.filter((card) => card !== selectedCard);
+      setCards(nCards);
+      setSelectedCard({});
+      alert('Card deleted!');
+    });
   }
 
   if (loading) {
@@ -62,11 +74,15 @@ function Home() {
 
   return (
     <>
-      <Sidebar handleSubmit={handleCardCreate} selectedCard={selectedCard} />
+      <Sidebar
+        handleSubmit={handleCardCreate}
+        handleCardDelete={handleCardDelete}
+        selectedCard={selectedCard}
+      />
       <main>
         <CardsViewer
           cards={cards}
-          handleClick={handleClick}
+          handleClick={handleCellClick}
           handleTitleClick={handleTitleClick}
         />
       </main>

@@ -71,6 +71,7 @@ function EditCard(props) {
 
   function handleDelete(e) {
     // Deletes a card
+    props.handleCardDelete(e);
   }
 
   function handleSave(e) {}
