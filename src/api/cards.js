@@ -39,6 +39,21 @@ export async function updateCardCell(id, cellIdx, value) {
   return res;
 }
 
+// Update card using id
+export async function updateCard(card) {
+  const res = await fetch(`${api}${endpoint}/${card._id}`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ ...card }),
+  });
+
+  // TODO: Handle when API call fails
+  return res;
+}
+
 // Delete card using id
 export async function deleteCard(id) {
   const res = await fetch(`${api}${endpoint}/${id}`, {

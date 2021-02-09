@@ -54,10 +54,13 @@ function CreateCard(props) {
 
 function EditCard(props) {
   const { selectedCard } = props;
+  const [title, setTitle] = useState('');
   const [whys, setWhys] = useState([]);
 
   useEffect(() => {
-    if (selectedCard.whys) setWhys(selectedCard.whys);
+    if (selectedCard == null || Object.keys(selectedCard).length === 0) return;
+    setWhys(selectedCard.whys);
+    setTitle(selectedCard.title);
   }, [selectedCard]);
 
   if (selectedCard == null || Object.keys(selectedCard).length === 0) {
@@ -74,7 +77,24 @@ function EditCard(props) {
     props.handleCardDelete(e);
   }
 
-  function handleSave(e) {}
+  function handleSave(e) {
+    props.handleCardUpdate(e, {
+      ...selectedCard,
+      title,
+      whys,
+    });
+  }
+
+  function handleOnTitleChange(e) {
+    setTitle(e.target.value);
+  }
+
+  function handleOnWhyChange(e, idx) {
+    // Copy the whys
+    const cWhys = [...whys];
+    cWhys[idx] = e.target.value;
+    setWhys(cWhys);
+  }
 
   return (
     <div className="card-creation-container">
@@ -82,13 +102,18 @@ function EditCard(props) {
       <form className="card-creation">
         <div className="sidebar-row">
           <label htmlFor="title">Title:</label>
-          <input name="title" value={selectedCard.title} />
+          <input name="title" value={title} onChange={handleOnTitleChange} />
         </div>
         {whys.map((why, idx) => {
           return (
             <div key={idx} className="sidebar-row">
               <label htmlFor={idx}>{`Why ${idx + 1}:`}</label>
-              <input type="text" name={idx} value={why} readOnly={true} />
+              <input
+                type="text"
+                name={idx}
+                value={why}
+                onChange={(e) => handleOnWhyChange(e, idx)}
+              />
             </div>
           );
         })}

@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { getCards, createCard, updateCardCell, deleteCard } from '../api/index';
+import {
+  getCards,
+  createCard,
+  updateCardCell,
+  updateCard,
+  deleteCard,
+} from '../api/index';
 import { CardsViewer, Sidebar } from '../components';
 import './Home.css';
 
@@ -42,7 +48,7 @@ function Home() {
 
   function handleTitleClick(e, idx) {
     // Set the selected card
-    setSelectedCard([...cards][idx]);
+    setSelectedCard({ ...[...cards][idx], idx });
   }
 
   function handleCardCreate(e, card) {
@@ -53,11 +59,21 @@ function Home() {
     });
   }
 
+  function handleCardUpdate(e, card) {
+    updateCard(card).then(() => {
+      const nCards = [...cards];
+      nCards[selectedCard.idx] = card;
+      setCards(nCards);
+      alert('Card updated!');
+    });
+  }
+
   function handleCardDelete(e) {
     const card = selectedCard;
     deleteCard(card._id).then(() => {
       // Update the cards
-      const nCards = cards.filter((card) => card !== selectedCard);
+      const nCards = [...cards];
+      nCards.splice(selectedCard.idx, 1);
       setCards(nCards);
       setSelectedCard({});
       alert('Card deleted!');
@@ -76,6 +92,7 @@ function Home() {
     <>
       <Sidebar
         handleSubmit={handleCardCreate}
+        handleCardUpdate={handleCardUpdate}
         handleCardDelete={handleCardDelete}
         selectedCard={selectedCard}
       />

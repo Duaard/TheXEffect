@@ -1,1 +1,7 @@
-export { getCards, createCard, updateCardCell, deleteCard } from './cards';
+export {
+  getCards,
+  createCard,
+  updateCardCell,
+  updateCard,
+  deleteCard,
+} from './cards';
