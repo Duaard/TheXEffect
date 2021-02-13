@@ -9,6 +9,12 @@ function CreateCard(props) {
     setWhys(nWhys);
   }
 
+  function removeInput(idx) {
+    const nWhys = [...whys];
+    nWhys.splice(idx, 1)
+    setWhys(nWhys);
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     const card = {
@@ -33,18 +39,21 @@ function CreateCard(props) {
           <label htmlFor="title">Title:</label>
           <input type="text" name="title" />
         </div>
-        {whys.map((why, idx) => {
-          return (
-            <div key={idx} className="sidebar-row">
-              <label htmlFor={idx}>{`Why ${idx + 1}:`}</label>
-              <input type="text" name={idx} onChange={handleTextInput} />
-            </div>
-          );
-        })}
         <div className="sidebar-row">
           <button type="button" onClick={addInput}>
             Add why(s)
           </button>
+        </div>
+        {whys.map((why, idx) => {
+          return (
+            <div key={idx} className="sidebar-row">
+              <label htmlFor={idx}>{`${idx + 1}:`}</label>
+              <input type="text" name={idx} value={why} onChange={handleTextInput} />
+              <button type="button" onClick={()=>{removeInput(idx)}}>-</button>
+            </div>
+          );
+        })}
+        <div className="sidebar-row">
           <input type="submit" value="Create Card" />
         </div>
       </form>
