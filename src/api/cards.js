@@ -20,8 +20,8 @@ export async function createCard(card) {
     },
     body: JSON.stringify(card),
   });
-
-  return res._id;
+  const data = await res.json();
+  return data._id;
 }
 
 // Send a put request to handle cell click
@@ -36,7 +36,8 @@ export async function updateCardCell(id, cellIdx, value) {
   });
 
   // TODO: Handle when API call fails
-  return res;
+  const data = await res.json();
+  return data;
 }
 
 // Update card using id
@@ -51,7 +52,8 @@ export async function updateCard(card) {
   });
 
   // TODO: Handle when API call fails
-  return res;
+  const data = await res.json();
+  return data;
 }
 
 // Delete card using id
@@ -65,5 +67,6 @@ export async function deleteCard(id) {
   });
 
   // TODO: Handle when API call fails
-  return res;
+  const data = await res.json();
+  return data;
 }
