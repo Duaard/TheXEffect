@@ -11,7 +11,7 @@ import './Home.css';
 
 function Home() {
   const [cards, setCards] = useState([]);
-  const [selectedCard, setSelectedCard] = useState({});
+  const [selectedCard, setSelectedCard] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -51,7 +51,7 @@ function Home() {
     setSelectedCard({ ...[...cards][idx], idx });
   }
 
-  function handleCardCreate(e, card) {
+  function handleCardCreate(card) {
     createCard(card).then((_id) => {
       const nCards = [...cards];
       nCards.push({ ...card, _id });
@@ -59,7 +59,7 @@ function Home() {
     });
   }
 
-  function handleCardUpdate(e, card) {
+  function handleCardUpdate(card) {
     updateCard(card).then(() => {
       const nCards = [...cards];
       nCards[selectedCard.idx] = card;
