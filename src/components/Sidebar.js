@@ -11,7 +11,7 @@ function CreateCard(props) {
 
   function removeInput(idx) {
     const nWhys = [...whys];
-    nWhys.splice(idx, 1)
+    nWhys.splice(idx, 1);
     setWhys(nWhys);
   }
 
@@ -48,8 +48,20 @@ function CreateCard(props) {
           return (
             <div key={idx} className="sidebar-row">
               <label htmlFor={idx}>{`${idx + 1}:`}</label>
-              <input type="text" name={idx} value={why} onChange={handleTextInput} />
-              <button type="button" onClick={()=>{removeInput(idx)}}>-</button>
+              <input
+                type="text"
+                name={idx}
+                value={why}
+                onChange={handleTextInput}
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  removeInput(idx);
+                }}
+              >
+                -
+              </button>
             </div>
           );
         })}
