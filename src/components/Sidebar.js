@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './Sidebar.css';
 
 function CreateCard(props) {
-  // TODO: Fix initial values for CreateCard
-  const initial = { title: '', whys: ['', '', ''] };
+  const [defaultValues, setDefaultValues] = useState({
+    title: '',
+    whys: ['', '', ''],
+  });
 
   function handleSubmit(title, whys) {
     props.handleSubmit({
@@ -11,6 +13,7 @@ function CreateCard(props) {
       whys,
       grid: [...Array(49)],
     });
+    setDefaultValues({ title: '', whys: ['', '', ''] });
   }
 
   const children = <button type="submit">Create Card</button>;
@@ -18,7 +21,7 @@ function CreateCard(props) {
   return (
     <CardForm
       header="Add Card"
-      selectedCard={initial}
+      initialValues={defaultValues}
       handleSubmit={handleSubmit}
     >
       {children}
@@ -61,7 +64,7 @@ function EditCard(props) {
     <>
       <CardForm
         header="Edit Card"
-        selectedCard={selectedCard}
+        initialValues={selectedCard}
         handleSubmit={handleSubmit}
       >
         {children}
@@ -71,16 +74,13 @@ function EditCard(props) {
 }
 
 function CardForm(props) {
-  const { header, selectedCard, children } = props;
+  const { header, initialValues, children } = props;
   const [title, setTitle] = useState('');
-  const initial = selectedCard ? selectedCard.whys : [];
-  const whys = useDynamicInput(initial);
+  const whys = useDynamicInput(initialValues.whys);
 
   useEffect(() => {
-    if (selectedCard) {
-      setTitle(selectedCard.title);
-    }
-  }, [selectedCard]);
+    setTitle(initialValues.title);
+  }, [initialValues]);
 
   function handleOnTitleChange(e) {
     setTitle(e.target.value);

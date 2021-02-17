@@ -56,6 +56,7 @@ function Home() {
       const nCards = [...cards];
       nCards.push({ ...card, _id });
       setCards(nCards);
+      alert('Card created!');
     });
   }
 
