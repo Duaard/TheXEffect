@@ -138,7 +138,12 @@ function LabeledInput(props) {
   return (
     <>
       <label htmlFor={name}>{label}</label>
-      <input name={name} value={value} onChange={handleInputChange} />
+      <input
+        name={name}
+        value={value}
+        autoComplete="off"
+        onChange={handleInputChange}
+      />
     </>
   );
 }
