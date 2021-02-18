@@ -32,7 +32,9 @@ function CreateCard(props) {
 function EditCard(props) {
   const { selectedCard } = props;
 
-  function handleDelete(e) {}
+  function handleDelete() {
+    props.handleCardDelete();
+  }
 
   function handleSubmit(title, whys) {
     props.handleCardUpdate({

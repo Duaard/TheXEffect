@@ -69,14 +69,14 @@ function Home() {
     });
   }
 
-  function handleCardDelete(e) {
+  function handleCardDelete() {
     const card = selectedCard;
     deleteCard(card._id).then(() => {
       // Update the cards
       const nCards = [...cards];
       nCards.splice(selectedCard.idx, 1);
       setCards(nCards);
-      setSelectedCard({});
+      setSelectedCard(null);
       alert('Card deleted!');
     });
   }
