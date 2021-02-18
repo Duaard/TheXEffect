@@ -152,13 +152,11 @@ function LabeledInput(props) {
 
 function Sidebar(props) {
   return (
-    <aside>
-      <div className="sidebar">
-        <h1>The X-Effect</h1>
-        <CreateCard handleSubmit={props.handleSubmit} />
-        <EditCard {...props} />
-      </div>
-    </aside>
+    <div className="sidebar">
+      <h1>The X-Effect</h1>
+      <CreateCard handleSubmit={props.handleSubmit} />
+      <EditCard {...props} />
+    </div>
   );
 }
 

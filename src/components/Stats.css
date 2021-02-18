@@ -1,0 +1,26 @@
+.stats-container {
+  background-color: #050b37;
+  color: white;
+  min-height: 50px;
+  font-size: 24px;
+  display: flex;
+  padding: 0px 30px;
+}
+
+.stats-title {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.stats-pane {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.stats-item {
+  margin-left: 15px;
+}

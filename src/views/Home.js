@@ -6,7 +6,7 @@ import {
   updateCard,
   deleteCard,
 } from '../api/index';
-import { CardsViewer, Sidebar } from '../components';
+import { CardsViewer, Sidebar, Stats } from '../components';
 import './Home.css';
 
 function Home() {
@@ -43,6 +43,7 @@ function Home() {
       grid[cellIdx] = value;
       nCards[cardIdx] = { ...nCards[cardIdx], grid: grid };
       setCards(nCards);
+      setSelectedCard({ ...[...nCards][cardIdx], cardIdx });
     });
   }
 
@@ -91,12 +92,14 @@ function Home() {
 
   return (
     <>
-      <Sidebar
-        handleSubmit={handleCardCreate}
-        handleCardUpdate={handleCardUpdate}
-        handleCardDelete={handleCardDelete}
-        selectedCard={selectedCard}
-      />
+      <aside>
+        <Sidebar
+          handleSubmit={handleCardCreate}
+          handleCardUpdate={handleCardUpdate}
+          handleCardDelete={handleCardDelete}
+          selectedCard={selectedCard}
+        />
+      </aside>
       <main>
         <CardsViewer
           cards={cards}
