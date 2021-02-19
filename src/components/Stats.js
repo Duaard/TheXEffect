@@ -26,14 +26,15 @@ function Info(props) {
   const { grid } = props;
   return (
     <>
+      <StreakCounter {...props} />
       <div className="stats-item">
-        {`Total X: ${grid.reduce(
+        {`X: ${grid.reduce(
           (count, cell) => (count += cell === 'x' ? 1 : 0),
           0
         )}`}
       </div>
       <div className="stats-item">
-        {`Total O: ${grid.reduce(
+        {`O: ${grid.reduce(
           (count, cell) => (count += cell === 'o' ? 1 : 0),
           0
         )}`}
@@ -42,6 +43,22 @@ function Info(props) {
   );
 }
 
-function StreakCounter(props) {}
+// Presentational component to render current streak and longest streak
+function StreakCounter(props) {
+  const { grid } = props;
+  let [longest, current] = [0, 0];
+  for (let cell of grid) {
+    if (cell === '' || cell == null) break;
+    current = cell === 'x' ? current + 1 : 0;
+    longest = Math.max(longest, current);
+  }
+
+  return (
+    <>
+      <div className="stats-item">{`Current Streak: ${current}`}</div>
+      <div className="stats-item">{`Longest Streak: ${longest}`}</div>
+    </>
+  );
+}
 
 export default Stats;
