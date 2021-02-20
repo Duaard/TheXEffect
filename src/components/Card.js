@@ -15,9 +15,12 @@ function Card(props) {
   };
 
   return (
-    <div className="card" onClick={handleTitleClick}>
-      <Stats card={card} />
+    <div className="card">
+      <div className="card-header">
+        <span onClick={handleTitleClick}>{props.title}</span>
+      </div>
       <Grid {...props} />
+      <Stats card={card} />
     </div>
   );
 }

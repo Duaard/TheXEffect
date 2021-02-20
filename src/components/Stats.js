@@ -14,7 +14,6 @@ function Stats(props) {
 
   return (
     <div className="stats-container">
-      <div className="stats-title">{card.title}</div>
       <div className="stats-pane">
         <Info grid={card.grid} />
       </div>
