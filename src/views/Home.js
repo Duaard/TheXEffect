@@ -6,7 +6,7 @@ import {
   updateCard,
   deleteCard,
 } from '../api/index';
-import { CardsViewer, Sidebar, Stats } from '../components';
+import { CardsViewer, Sidebar } from '../components';
 import './Home.css';
 
 function Home() {
