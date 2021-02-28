@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid } from './Grid';
 import { Stats } from './index';
-import { FaEllipsisH } from 'react-icons/fa';
+import Menu from './Menu';
 import './Card.css';
 
 function Card(props) {
@@ -26,13 +26,18 @@ function Card(props) {
 
 function Header(props) {
   const { title, handleTitleClick } = props;
+  function logger(word) {
+    console.log(word);
+  }
+  const options = [
+    { onClickHandler: logger.bind(logger, 'Edit'), value: 'Edit' },
+    { onClickHandler: logger.bind(logger, 'Delete'), value: 'Delete' },
+  ];
   return (
     <div className="card-header">
       <span onClick={handleTitleClick}>{title}</span>
       <div className="card-menu">
-        <span>
-          <FaEllipsisH />
-        </span>
+        <Menu items={options} />
       </div>
     </div>
   );

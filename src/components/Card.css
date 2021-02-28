@@ -13,5 +13,11 @@
   background-color: #050b37;
   color: white;
   font-size: 32px;
-  padding-left: 30px;
+  padding: 0px 30px;
+}
+
+.card-menu {
+  display: flex;
+  align-items: center;
+  float: right;
 }
