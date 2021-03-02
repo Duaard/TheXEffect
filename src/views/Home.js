@@ -7,9 +7,28 @@ import {
   deleteCard,
 } from '../api/index';
 import { CardsViewer, Sidebar } from '../components';
+import Header from '../components/Header';
+import { Layout } from 'antd';
+
+import 'antd/dist/antd.css';
 import './Home.css';
 
-function Home() {
+// Presentational component to display home
+function Home(props) {
+  const { cards, handleCellClick, handleTitleClick } = props;
+  return (
+    <>
+      <Header />
+      <CardsViewer
+        cards={cards}
+        handleClick={handleCellClick}
+        handleTitleClick={handleTitleClick}
+      />
+    </>
+  );
+}
+
+function HomeContainer() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState();
   const [loading, setLoading] = useState(true);
@@ -90,25 +109,13 @@ function Home() {
     return <h1>There seems to be an error</h1>;
   }
 
-  return (
-    <>
-      <aside>
-        <Sidebar
-          handleSubmit={handleCardCreate}
-          handleCardUpdate={handleCardUpdate}
-          handleCardDelete={handleCardDelete}
-          selectedCard={selectedCard}
-        />
-      </aside>
-      <main>
-        <CardsViewer
-          cards={cards}
-          handleClick={handleCellClick}
-          handleTitleClick={handleTitleClick}
-        />
-      </main>
-    </>
-  );
+  const homeProps = {
+    cards,
+    handleCellClick,
+    handleTitleClick,
+  };
+
+  return <Home {...homeProps} />;
 }
 
-export default Home;
+export default HomeContainer;
