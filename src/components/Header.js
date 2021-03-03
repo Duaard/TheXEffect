@@ -1,15 +1,20 @@
 import React from 'react';
 import './Header.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+
+import { FaList, FaTh, FaPlus } from 'react-icons/fa';
 
 function Header(props) {
-  const element = <FontAwesomeIcon icon={faEllipsisH} />;
   return (
     <div className="header">
       <div className="header-pane-left">
         <span>The X-Effect</span>
-        <span>{element}</span>
+        <div className="header-buttons">
+          <ul>
+            <li><FaList /></li>
+            <li><FaTh /></li>
+            <li><FaPlus/></li>
+          </ul>
+        </div>
       </div>
       <div className="header-pane-right">
         <span>Eduard Likwong</span>
