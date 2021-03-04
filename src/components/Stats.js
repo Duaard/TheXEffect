@@ -12,31 +12,25 @@ function Stats(props) {
     );
   }
 
-  return (
-    <div className="stats-container">
-      <div className="stats-pane">
-        <Info grid={card.grid} />
-      </div>
-    </div>
-  );
+  return <Info grid={card.grid} />;
 }
 
 function Info(props) {
   const { grid } = props;
   return (
     <>
-      <StreakCounter {...props} />
-      <div className="stats-item">
-        {`X: ${grid.reduce(
+      <div className="card-stats-left stats-item">
+        <span>{`X: ${grid.reduce(
           (count, cell) => (count += cell === 'x' ? 1 : 0),
           0
-        )}`}
-      </div>
-      <div className="stats-item">
-        {`O: ${grid.reduce(
+        )}`}</span>
+        <span>{`O: ${grid.reduce(
           (count, cell) => (count += cell === 'o' ? 1 : 0),
           0
-        )}`}
+        )}`}</span>
+      </div>
+      <div className="card-stats-right stats-item">
+        <StreakCounter {...props} />
       </div>
     </>
   );
@@ -54,8 +48,8 @@ function StreakCounter(props) {
 
   return (
     <>
-      <div className="stats-item">{`Current Streak: ${current}`}</div>
-      <div className="stats-item">{`Longest Streak: ${longest}`}</div>
+      <span>{`Current Streak: ${current}`}</span>
+      <span>{`Longest Streak: ${longest}`}</span>
     </>
   );
 }

@@ -18,8 +18,12 @@ function Card(props) {
   return (
     <div className="card">
       <Header title={props.title} handleTitleClick={handleTitleClick} />
-      <Grid {...props} />
-      <Stats card={card} />
+      <div className="card-grid-container">
+        <Grid {...props} />
+      </div>
+      <div className="card-stats">
+        <Stats card={card} />
+      </div>
     </div>
   );
 }
